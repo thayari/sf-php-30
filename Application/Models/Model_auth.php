@@ -33,6 +33,8 @@ class Model_auth extends Model {
 					// Ставим куки
 					setcookie("id", $id, time()+60*60*24*30, "/");
 					setcookie("hash", $hash, time()+60*60*24*30, "/", null, null, true); // httponly !!! 
+					
+					$_COOKIE['hash'] = $hash;
 
 					$this->checkHash($userData);
 					// header("Location: index.php?url=main"); exit();
@@ -79,7 +81,7 @@ class Model_auth extends Model {
 	function checkHash($userData) {
 		if (isset($_COOKIE['hash'])) {
 			if($userData['hash'] !== $_COOKIE['hash']) {
-				setcookie("id", "", time() - 3600*24*30*12, "/");
+				// setcookie("id", "", time() - 3600*24*30*12, "/");
 				setcookie("hash", "", time() - 3600*24*30*12, "/", null, null, true); // httponly !!!
 				print "Хм, что-то не получилось";
 			}
