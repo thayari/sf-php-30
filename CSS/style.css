@@ -46,3 +46,10 @@ form.deleteCommentForm button {
 form.deleteCommentForm button:hover {
   color: rgb(221, 37, 37);
 }
+
+.gallery-item .btn-delete {
+  font-weight: 700;
+  line-height: 20px;
+  font-size: 30px;
+  flex-grow: 0;
+}
