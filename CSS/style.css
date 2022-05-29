@@ -29,3 +29,20 @@ nav > ul > li {
   max-width: 960px;
   margin: 0 auto;
 }
+
+form.deleteCommentForm {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+form.deleteCommentForm button {
+  border: none;
+  background: none;
+  font-size: 2rem;
+  line-height: 33px;
+}
+
+form.deleteCommentForm button:hover {
+  color: rgb(221, 37, 37);
+}

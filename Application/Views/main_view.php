@@ -6,8 +6,8 @@
 				<img src="<?=$value['url']; ?>" class="card-img-top" alt="...">
 				<div class="card-body">
 					<div class="btn-group" role="group">
-						<a href="/?url=comments&id=<?=$value['id'];?>" class="btn btn-light">Комментарии</a>
-						<a href="/?url=delete&id=<?=$value['id'];?>" class="btn btn-danger">×</a>
+						<a href="<?=ROOT_PATH?>/?url=comments&id=<?=$value['id'];?>" class="btn btn-light">Комментарии</a>
+						<a href="<?=ROOT_PATH?>/?url=delete&id=<?=$value['id'];?>" class="btn btn-danger">×</a>
 					</div>
 				</div>
 			</div>

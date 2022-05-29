@@ -31,13 +31,13 @@ class Model_auth extends Model {
 					setDbData($query);
 
 					// Ставим куки
-					setcookie("id", $id, time()+60*60*24*30, "/");
+					setcookie("sf30_id", $id, time()+60*60*24*30, "/");
 					setcookie("hash", $hash, time()+60*60*24*30, "/", null, null, true); // httponly !!! 
 					
 					$_COOKIE['hash'] = $hash;
 
-					$this->checkHash($userData);
-					// header("Location: index.php?url=main"); exit();
+					// $this->checkHash($userData);
+					header("Location: index.php?url=main"); exit();
 				}
 				else
 				{
@@ -60,8 +60,9 @@ class Model_auth extends Model {
 			}
 		}
 		else {
-			if (isset($_COOKIE['id'])) {
-				setcookie("id", "", time() - 3600*24*30*12, "/");
+			// выход
+			if (isset($_COOKIE['sf30_id'])) {
+				setcookie("sf30_id", "", time() - 3600*24*30*12, "/");
 				setcookie("hash", "", time() - 3600*24*30*12, "/", null, null, true); // httponly !!!
 				header("Location: index.php?url=auth"); exit();
 			}
@@ -81,7 +82,7 @@ class Model_auth extends Model {
 	function checkHash($userData) {
 		if (isset($_COOKIE['hash'])) {
 			if($userData['hash'] !== $_COOKIE['hash']) {
-				// setcookie("id", "", time() - 3600*24*30*12, "/");
+				// setcookie("sf30_id", "", time() - 3600*24*30*12, "/");
 				setcookie("hash", "", time() - 3600*24*30*12, "/", null, null, true); // httponly !!!
 				print "Хм, что-то не получилось";
 			}
