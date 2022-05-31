@@ -22,22 +22,7 @@ class Model_auth extends Model {
 
 				// залогинить пользователя
 				if($password === md5(md5($_POST['password']))) {
-					// Генерируем случайное число и шифруем его
-					$hash = md5($this->generateCode(10));
-
-					// Записываем в БД новый хеш авторизации
-					$query = 'UPDATE `users` SET hash = "'.$hash.'" WHERE id = "'.$id.'"';
-					// echo $query;die();
-					setDbData($query);
-
-					// Ставим куки
-					setcookie("sf30_id", $id, time()+60*60*24*30, "/");
-					setcookie("hash", $hash, time()+60*60*24*30, "/", null, null, true); // httponly !!! 
-					
-					$_COOKIE['hash'] = $hash;
-
-					// $this->checkHash($userData);
-					header("Location: index.php?url=main"); exit();
+					$this->loginUser($id);
 				}
 				else
 				{
@@ -50,7 +35,9 @@ class Model_auth extends Model {
 				$password = md5(md5(trim($_POST['password']))); 
 				$query = 'INSERT INTO `users` SET `login`="'.$login.'", password="'.$password.'"';
 				setDbData($query);
-				header("Location: index.php?url=main"); exit();
+
+				$user = getDbData("SELECT * FROM `users` WHERE `login` LIKE '".$login."';");
+				$this->loginUser($user[0]['id']);
 			}
 			else {
 				print "<b>При регистрации произошли следующие ошибки:</b><br>";
@@ -78,6 +65,25 @@ class Model_auth extends Model {
 		}
 		return $code;
 	} 
+
+	function loginUser($id) {
+		// Генерируем случайное число и шифруем его
+		$hash = md5($this->generateCode(10));
+
+		// Записываем в БД новый хеш авторизации
+		$query = 'UPDATE `users` SET hash = "'.$hash.'" WHERE id = "'.$id.'"';
+		// echo $query;die();
+		setDbData($query);
+
+		// Ставим куки
+		setcookie("sf30_id", $id, time()+60*60*24*30, "/");
+		setcookie("hash", $hash, time()+60*60*24*30, "/", null, null, true); // httponly !!! 
+		
+		$_COOKIE['hash'] = $hash;
+
+		// $this->checkHash($userData);
+		header("Location: index.php?url=main"); exit();
+	}
 
 	function checkHash($userData) {
 		if (isset($_COOKIE['hash'])) {
